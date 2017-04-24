@@ -1,6 +1,7 @@
 {
   "name": "multitouch-playground",
   "version": "0.1.0",
+  "homepage": "http://taktran.github.io/multitouch-playground",
   "dependencies": {
     "ramda": "0.23.0",
     "react": "^15.5.4",
