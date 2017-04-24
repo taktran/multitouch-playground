@@ -38,10 +38,6 @@ const Game = ({
 
   // let emitter;
 
-  function reset() {
-
-  }
-
   function create() {
     game.stage.backgroundColor = backgroundColor;
 
@@ -56,8 +52,6 @@ const Game = ({
     game.input.addPointer();
     game.input.addPointer();
     game.input.addPointer();
-
-    reset();
   }
 
   // function createParticleEmitter({
@@ -109,7 +103,6 @@ const Game = ({
 
   return {
     game,
-    reset,
     toggleDebug
   };
 };
