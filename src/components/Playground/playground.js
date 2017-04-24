@@ -23,6 +23,15 @@ const Game = ({
     state.debug = !state.debug;
   };
 
+  const reset = () => {
+    // TODO: Not working
+    forEachObjIndexed(pointer => {
+      pointer.resetButtons();
+      pointer.resetMovement();
+      pointer.reset();
+    }, state.pointers);
+  };
+
   const showPointers = () => {
     game.debug.pointer(game.input.mousePointer);
 
@@ -169,7 +178,8 @@ const Game = ({
 
   return {
     game,
-    toggleDebug
+    toggleDebug,
+    reset
   };
 };
 

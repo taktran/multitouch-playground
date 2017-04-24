@@ -1,6 +1,15 @@
-.toggle-button {
+.toggle-button,
+.reset-button {
   position: absolute;
+  cursor: pointer;
+}
+
+.toggle-button {
+  top: 50px;
+  right: 10px;
+}
+
+.reset-button {
   top: 10px;
   right: 10px;
-  cursor: pointer;
 }
