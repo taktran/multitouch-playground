@@ -1,3 +1,5 @@
+const { forEachObjIndexed, reduce } = require('ramda');
+
 const Game = ({
   Phaser,
   width = 800,
@@ -6,8 +8,10 @@ const Game = ({
 }) => {
   if (!Phaser) { throw new Error('Phaser is required'); }
 
+  const NUM_POINTERS = 10;
   const state = {
-    debug: true
+    debug: true,
+    distances: []
   };
   const game = new Phaser.Game(width, height, Phaser.AUTO, '', {
     create: create,
@@ -47,6 +51,31 @@ const Game = ({
     game.debug.pointer(pointer10);
   }
 
+  const getDistances = () => {
+    for (let pointerIndex = 0; pointerIndex < NUM_POINTERS; pointerIndex++) {
+      for (let comparisonPointerIndex = 0; comparisonPointerIndex < NUM_POINTERS; comparisonPointerIndex++) {
+        if (!state.distances[pointerIndex]) { state.distances[pointerIndex] = []; }
+
+        const pointer = state.pointers[pointerIndex];
+        const pointerToCompare = state.pointers[comparisonPointerIndex];
+        state.distances[pointerIndex][comparisonPointerIndex] = pointer.position.distance(pointerToCompare.position);
+      }
+    }
+  };
+
+  const showDistances = () => {
+    const padding = 32;
+    const initX = 32;
+    const initY = 32;
+    forEachObjIndexed((pDist, index) => {
+      const pNum = parseInt(index, 10) + 1;
+      const getPointerDistanceText = (acc, dist) => `${acc}\t${Math.round(dist)}`;
+      const pDistText = reduce(getPointerDistanceText, '', pDist);
+      const y = initY + (index * padding);
+      game.debug.text(`p${ pNum }: ${pDistText}`, initX, y);
+    }, state.distances);
+  };
+
   // let emitter;
 
   function create() {
@@ -63,6 +92,31 @@ const Game = ({
     game.input.addPointer();
     game.input.addPointer();
     game.input.addPointer();
+
+    const {
+      pointer1,
+      pointer2,
+      pointer3,
+      pointer4,
+      pointer5,
+      pointer6,
+      pointer7,
+      pointer8,
+      pointer9,
+      pointer10
+    } = game.input;
+    state.pointers = [
+      pointer1,
+      pointer2,
+      pointer3,
+      pointer4,
+      pointer5,
+      pointer6,
+      pointer7,
+      pointer8,
+      pointer9,
+      pointer10
+    ];
   }
 
   // function createParticleEmitter({
@@ -100,24 +154,8 @@ const Game = ({
   //   });
   // }
 
-
-  let dist1to2 = 0;
-  let dist1to3 = 0;
-  let dist1to4 = 0;
-
   function update() {
-    const {
-      pointer1,
-      pointer2,
-      pointer3,
-      pointer4
-    } = game.input;
-
-    if (pointer1.active) {
-      dist1to2 = pointer2.active ? pointer1.position.distance(pointer2.position) : 0;
-      dist1to3 = pointer3.active ? pointer1.position.distance(pointer3.position) : 0;
-      dist1to4 = pointer4.active ? pointer1.position.distance(pointer4.position) : 0;
-    }
+    getDistances();
   }
 
   function render() {
@@ -125,10 +163,7 @@ const Game = ({
 
     if (debug) {
       showPointers();
-
-      game.debug.text(`p1 -> p2: ${dist1to2}`, 32, 32);
-      game.debug.text(`p1 -> p3: ${dist1to3}`, 32, 64);
-      game.debug.text(`p1 -> p4: ${dist1to4}`, 32, 96);
+      showDistances();
     }
   }
 
