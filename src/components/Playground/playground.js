@@ -6,12 +6,31 @@ const Game = ({
 }) => {
   if (!Phaser) { throw new Error('Phaser is required'); }
 
+  const state = {};
   const game = new Phaser.Game(width, height, Phaser.AUTO, '', {
     preload: preload,
     create: create,
     update: update,
     render: render
   });
+
+  const toggleDebug = () => {
+    state.debug = !state.debug;
+  };
+
+  const showPointers = () => {
+    game.debug.pointer(game.input.mousePointer);
+    game.debug.pointer(game.input.pointer1);
+    game.debug.pointer(game.input.pointer2);
+    game.debug.pointer(game.input.pointer3);
+    game.debug.pointer(game.input.pointer4);
+    game.debug.pointer(game.input.pointer5);
+    game.debug.pointer(game.input.pointer6);
+    game.debug.pointer(game.input.pointer7);
+    game.debug.pointer(game.input.pointer8);
+    game.debug.pointer(game.input.pointer9);
+    game.debug.pointer(game.input.pointer10);
+  }
 
   function preload() {
 
@@ -81,22 +100,17 @@ const Game = ({
   }
 
   function render() {
-    game.debug.pointer(game.input.mousePointer);
-    game.debug.pointer(game.input.pointer1);
-    game.debug.pointer(game.input.pointer2);
-    game.debug.pointer(game.input.pointer3);
-    game.debug.pointer(game.input.pointer4);
-    game.debug.pointer(game.input.pointer5);
-    game.debug.pointer(game.input.pointer6);
-    game.debug.pointer(game.input.pointer7);
-    game.debug.pointer(game.input.pointer8);
-    game.debug.pointer(game.input.pointer9);
-    game.debug.pointer(game.input.pointer10);
+    const { debug } = state;
+
+    if (debug) {
+      showPointers();
+    }
   }
 
   return {
     game,
-    reset
+    reset,
+    toggleDebug
   };
 };
 

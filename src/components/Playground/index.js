@@ -7,17 +7,17 @@ class Playground extends Component {
   constructor() {
     super();
 
-    const { reset } = Game({
+    const { toggleDebug } = Game({
       Phaser,
       backgroundColor: '#A2BDDE' // Sky blue
     });
 
-    this.reset = reset;
+    this.toggleDebug = toggleDebug;
   }
   render() {
     return <div>
-      <button className='reset-button'
-        onClick={this.reset}>Reset</button>
+      <button className='toggle-button'
+        onClick={this.toggleDebug}>Toggle debug</button>
     </div>;
   }
 }
