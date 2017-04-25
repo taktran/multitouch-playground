@@ -2,6 +2,8 @@
 
 A multitouch playground using [Phaser](http://phaser.io/).
 
+[Demo](https://taktran.github.io/multitouch-playground/)
+
 ## Development
 
 1. Install [nvm](https://github.com/creationix/nvm)
@@ -14,3 +16,11 @@ A multitouch playground using [Phaser](http://phaser.io/).
 4. Run
 
         npm start
+
+## Deployment
+
+To make a build, run
+
+    npm run build
+
+Commit the changes and push to github. The site is deployed to https://taktran.github.io/multitouch-playground/
